@@ -1,9 +1,9 @@
-from core.llm.client import LLMClient
-from dotenv import load_dotenv
-load_dotenv()
+from src.agent.assistant import Assistant
 
 def main():
-    client = LLMClient()
+    client = Assistant()
+
+    print(client.ask(input()))
 
 
 if __name__ == "__main__":
