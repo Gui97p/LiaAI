@@ -1,6 +1,6 @@
-from src.agent.prompt import buildSystemPrompt
-from src.llm.client import LLMClient
-from src.memory.history import History
+from core.agent.prompt import buildSystemPrompt
+from core.llm.client import LLMClient
+from core.memory.history import History
 
 class Assistant:
     def __init__(self):

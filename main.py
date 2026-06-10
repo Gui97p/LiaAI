@@ -1,10 +1,5 @@
-from src.agent.assistant import Assistant
+from fastapi import FastAPI
+from api.chat.chatRoute import router as chatRouter
 
-def main():
-    client = Assistant()
-
-    print(client.ask(input()))
-
-
-if __name__ == "__main__":
-    main()
+app = FastAPI()
+app.include_router(chatRouter, prefix='/api')
