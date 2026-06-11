@@ -13,7 +13,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "searchWeb",
-            "description": "Busca informações atuais na web. Use para clima, notícias, preços. Usado quando o usuário não quer ver os resultados, apenas saber",
+            "description": "Busca informações na web e retorna o resultado diretamente. Use quando o usuário quer saber algo — clima, notícias, preços, fatos. NÃO use se o usuário pediu pra abrir o navegador ou ver os resultados.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -50,7 +50,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "openWeb",
-            "description": "Abre o navegador padrão do sistema e pesquisa algo. Usado quando o usuário quer ver as respostas por si.",
+            "description": "Abre o navegador do usuário com uma pesquisa ou URL. Use quando o usuário quer navegar, ver resultados por conta própria, ou usou palavras como 'abre', 'pesquisa no google', 'me mostra'.",
             "parameters": {
                 "type": "object",
                 "properties": {
