@@ -1,22 +1,24 @@
 from core.agent.prompt import buildSystemPrompt
 from core.llm.client import LLMClient
 from core.memory.history import History
-from core.tools.registry import REGISTRY
+from core.tools.registry import REGISTRY, buildTools
+
 class Assistant:
     def __init__(self):
         self.client = LLMClient("openai/gpt-oss-120b")
         self.history = History()
     
-    def ask(self, message):
+    def ask(self, message, capabilities):
         self.history.insert('user', message)
         system = buildSystemPrompt()
+        tools = buildTools(capabilities)
 
         messages = [{"role": "system", "content": system}]
 
         for h in self.history.get():
             messages.append({"role": h["role"], "content": h["content"]})
         
-        response = self.client.call(messages)
+        response = self.client.call(messages, tools)
 
         localTools = []
         if response.get('tool_calls') is not None:
@@ -29,12 +31,12 @@ class Assistant:
                 globalTool = REGISTRY.get(tool.function.name)
                 if globalTool != None:
                     toolResponse = globalTool(tool)
-                    toolsExecuted = True
+                    
                     if toolResponse is not None:
                         responseObject = {
                             "role": "tool",
                             "tool_call_id": tool.id,
-                            "content": toolResponse
+                            "content": str(toolResponse)
                         }
                         messages.append(responseObject)
                         self.history.insert('tool', responseObject)
@@ -47,7 +49,7 @@ class Assistant:
             messages.append({"role": "system", "content": '''The messages marked as pending role have tools that will
                                 be returned to the client for execution, while the messages marked as tool role are responses for tools
                                 you asked. Now generate the final response for the user'''})    
-            response = self.client.call(messages)
+            response = self.client.call(messages, tools, forceText=True)
 
 
         self.history.insert('assistant', response['content'])
