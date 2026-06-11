@@ -54,13 +54,10 @@ class Assistant:
                     })
                     messages.append({"role": "tool", 
                                 "tool_call_id": tool.id, 
-                                "content": "Pending client execution: " + tool.function.name})
+                                "content": "Executed by client. Do not call any more tools. Generate the final text response now."})
             
-            messages.append({"role": "system", "content": '''The messages marked as pending role have tools that will
-                                be returned to the client for execution, while the messages marked as tool role are responses for tools
-                                you asked. Now generate the final response for the user'''})    
+            messages.append({"role": "system", "content": "All tools have been handled. Respond only in text, do not request any tools."})    
             response = self.client.call(messages, tools=[])
-
 
         self.history.insert('assistant', response['content'])
         return {

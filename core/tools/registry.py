@@ -13,7 +13,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "searchWeb",
-            "description": "Busca informações atuais na web. Use para clima, notícias, preços.",
+            "description": "Busca informações atuais na web. Use para clima, notícias, preços. Usado quando o usuário não quer ver os resultados, apenas saber",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -42,6 +42,24 @@ TOOLS = [
                     }
                 },
                 "required": ["appName"]
+            }
+        }
+    },
+    {
+        "local": True,
+        "type": "function",
+        "function": {
+            "name": "openWeb",
+            "description": "Abre o navegador padrão do sistema e pesquisa algo. Usado quando o usuário quer ver as respostas por si.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Query de busca específica"
+                    }
+                },
+                "required": ["query"]
             }
         }
     },
