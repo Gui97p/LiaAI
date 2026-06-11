@@ -32,13 +32,14 @@ class Assistant:
             for tool in response.get('tool_calls'):
                 globalTool = REGISTRY.get(tool.function.name)
                 if globalTool != None:
-                    toolResponse = globalTool(tool)
+                    args = json.loads(tool.function.arguments)
+                    toolResponse = globalTool(**args)
                     
                     if toolResponse is not None:
                         responseObject = {
                             "role": "tool",
                             "tool_call_id": tool.id,
-                            "content": json.dump(toolResponse)
+                            "content": toolResponse
                         }
                         messages.append(responseObject)
                         self.history.insert('tool', responseObject)
@@ -58,7 +59,7 @@ class Assistant:
             messages.append({"role": "system", "content": '''The messages marked as pending role have tools that will
                                 be returned to the client for execution, while the messages marked as tool role are responses for tools
                                 you asked. Now generate the final response for the user'''})    
-            response = self.client.call(messages, tools, forceText=True)
+            response = self.client.call(messages, tools=[])
 
 
         self.history.insert('assistant', response['content'])
