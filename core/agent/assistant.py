@@ -3,6 +3,8 @@ from core.llm.client import LLMClient
 from core.memory.history import History
 from core.tools.registry import REGISTRY, buildTools
 
+import json
+
 class Assistant:
     def __init__(self):
         self.client = LLMClient("openai/gpt-oss-120b")
@@ -36,12 +38,19 @@ class Assistant:
                         responseObject = {
                             "role": "tool",
                             "tool_call_id": tool.id,
-                            "content": str(toolResponse)
+                            "content": json.dump(toolResponse)
                         }
                         messages.append(responseObject)
                         self.history.insert('tool', responseObject)
                 else:
-                    localTools.append(tool)
+                    localTools.append({
+                        "id": tool.id,
+                        "type": tool.type,
+                        "function": {
+                            "name": tool.function.name,
+                            "arguments": json.loads(tool.function.arguments)
+                        }
+                    })
                     messages.append({"role": "tool", 
                                 "tool_call_id": tool.id, 
                                 "content": "Pending client execution: " + tool.function.name})
