@@ -7,9 +7,9 @@ class LLMTranscriber:
         self.client = Groq()
         self.model = model
 
-    def call(self, audio):
+    def call(self, audio, filename: str):
         transcription = self.client.audio.transcriptions.create(
-            file=audio,
+            file=(filename, audio),
             model=self.model,
             language="pt"
         )
