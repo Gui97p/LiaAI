@@ -11,3 +11,4 @@ wheels/
 
 # Local Development Files
 .env
+memory.db

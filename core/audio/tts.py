@@ -9,7 +9,9 @@ class LLMTTS:
         communicate = edge_tts.Communicate(text, voice=self.model)
         buffer = io.BytesIO()
 
-        await communicate.save(buffer)
-        buffer.seek(0)
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                buffer.write(chunk["data"])
 
+        buffer.seek(0)
         return buffer

@@ -1,3 +1,5 @@
+from core.memory.store import Memory
+
 SYSTEM_PROMPT = '''Você é Lia, assistente pessoal de IA.
 
 ## Identidade
@@ -16,9 +18,10 @@ SYSTEM_PROMPT = '''Você é Lia, assistente pessoal de IA.
 - Evite frases de encerramento como 'boa sorte', 'boa codificação', 'qualquer coisa é só falar
 - Confirmações de ação devem ser curtas e diretas — uma frase'''
 
-def buildSystemPrompt() -> str:
-    #memory = get_facts(limit=15)
-    #memory_text = "\n".join([f"- [{m['category']}] {m['fact']}" for m in memory]) or "Nenhuma."
-    memoryText = "Nada."
+def buildSystemPrompt(memories: list[Memory]) -> str:
+    if memories:
+        memoryText = "\n".join([f"- [{m.category}] {m.fact}" for m in memories])
+    else:
+        memoryText = "Nada."
    
     return SYSTEM_PROMPT.replace("{memory}", memoryText)

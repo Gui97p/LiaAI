@@ -27,6 +27,28 @@ TOOLS = [
         }
     },
     {
+        "type": "function",
+        "function": {
+            "name": "saveMemory",
+            "description": "Salva um fato importante sobre o usuário. Usar para informações relevantes que precisem de persistência ou quando o usuário pedir.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "fact": {
+                        "type": "string",
+                        "description": "Fato a ser salvo"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": ["preference", "personal", "routine", "other"],
+                        "description": "Categoria do fato"
+                    }
+                },
+                "required": ["fact", "category"]
+            }
+        }
+    },
+    {
         "local": True,
         "type": "function",
         "function": {

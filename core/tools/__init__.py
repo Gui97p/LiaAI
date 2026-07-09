@@ -1,1 +1,1 @@
-from core.tools import searchWeb
+from core.tools import searchWeb, saveMemory

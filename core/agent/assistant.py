@@ -1,6 +1,7 @@
 from core.agent.prompt import buildSystemPrompt
 from core.llm.client import LLMClient
 from core.memory.history import History
+from core.memory.sqlite import getMemoryStore
 from core.tools.registry import REGISTRY, buildTools
 
 import json
@@ -9,10 +10,13 @@ class Assistant:
     def __init__(self):
         self.client = LLMClient("openai/gpt-oss-120b")
         self.history = History()
+        self.memory = getMemoryStore()
     
     def ask(self, message, capabilities):
         self.history.insert('user', message)
-        system = buildSystemPrompt()
+        memory = self.memory.getAll()
+
+        system = buildSystemPrompt(memory)
         tools = buildTools(capabilities)
 
         messages = [{"role": "system", "content": system}]
