@@ -20,7 +20,7 @@ SYSTEM_PROMPT = '''Você é Lia, assistente pessoal de IA.
 
 def buildSystemPrompt(memories: list[Memory]) -> str:
     if memories:
-        memoryText = "\n".join([f"- [{m.category}] {m.fact}" for m in memories])
+        memoryText = "\n".join([f"- [id={m.id}] [createdAt={m.createdAt}] [{m.category}] {m.fact}" for m in memories])
     else:
         memoryText = "Nada."
    

@@ -46,6 +46,14 @@ class SQLiteMemoryStore:
 
         return list(map(lambda x: Memory(id=x[0], fact=x[1], category=x[2], createdAt=x[3]), memoryList))
 
+    def update(self, id: int, fact: str) -> Memory:
+        self.conn.execute('''
+            UPDATE memories SET fact = ? WHERE id = ?
+        ''', (fact, id))
+        self.conn.commit()
+
+        return self.getById(id)
+
     def delete(self, id: int) -> None:
         self.conn.execute('''
             DELETE FROM memories WHERE id = ?

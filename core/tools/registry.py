@@ -49,6 +49,44 @@ TOOLS = [
         }
     },
     {
+        "type": "function",
+        "function": {
+            "name": "updateMemory",
+            "description": "Salva um fato importante sobre o usuário no lugar de outra memória. Usar para atualizar informações relevantes que precisem de persistência ou quando o usuário pedir.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "factId": {
+                        "type": "number",
+                        "description": "ID do fato a ser sobreescrito"
+                    },
+                    "fact": {
+                        "type": "string",
+                        "description": "Conteúdo do novo fato"
+                    }
+                },
+                "required": ["factId", "fact"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "deleteMemory",
+            "description": "Deleta um fato sobre o usuário. Usar quando o usuário pedir ou quando achar que a informação não seja mais relevante.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "factId": {
+                        "type": "number",
+                        "description": "ID do fato a ser deletado"
+                    }
+                },
+                "required": ["factId"]
+            }
+        }
+    },
+    {
         "local": True,
         "type": "function",
         "function": {
