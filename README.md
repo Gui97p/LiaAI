@@ -1,7 +1,7 @@
 # Warning
 
-- This project is a prototype and discontinued.
-- Discontinued in favor of a Go rewrite — the most recent implementation can be found [here](https://github.com/Gui97p/lia-server).
+- This project is a prototype.
+- Discontinued in favor of a Go rewrite. The most recent implementation can be found [here](https://github.com/Gui97p/lia-server).
 
 ## Setup
 
